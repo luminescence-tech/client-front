@@ -3,7 +3,7 @@ import InstructionsComponent from "../components/InstructionsComponent";
 import { extendTheme, ChakraProvider } from '@chakra-ui/react'
 
 const colors = {
-  background: "black",
+  backgroundColor: "black",
 }
 
 const theme = extendTheme({ colors })
@@ -13,9 +13,9 @@ export default function Home() {
     <div>
 
       <ChakraProvider theme={theme}>
-        {/* <main className={styles.main}> */}
+        <main className={styles.main}>
           <InstructionsComponent></InstructionsComponent>
-        {/* </main> */}
+        </main>
       </ChakraProvider>
 
     </div>
