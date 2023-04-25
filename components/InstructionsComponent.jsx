@@ -1,6 +1,8 @@
 import styles from "../styles/InstructionsComponent.module.css";
 import Router, { useRouter } from "next/router";
 import { Flex, Grid, GridItem, Box, Text, border } from "@chakra-ui/react";
+import axios from "axios";
+
 import {
 	Table,
 	Thead,
@@ -19,9 +21,51 @@ import React, { useEffect, useState } from 'react';
 export default function InstructionsComponent() {
 	const router = useRouter();
 	const [isLoading, setLoading] = useState(false);
+	const [cyn, setCYN] = React.useState(0);
+	const [euro, setEURO] = React.useState(0);
+	const [usd, setUSD] = React.useState(0);
+
+	const usdp = "https://api.exchangerate.host/latest?base=RUB&symbols=USD";
+	const europ = "https://api.exchangerate.host/latest?base=RUB&symbols=EURO";
+	const cynp = "https://api.exchangerate.host/latest?base=RUB&symbols=CYN";
+
+	React.useEffect(() => {
+		axios.get(usdp).then((response) => {
+			console.log("USD: ", response.data.rates.USD)
+			setUSD(response.data);
+		});
+
+		axios.get(europ).then((response) => {
+			console.log("EURO: ", response.data.rates.EUR);
+			setEURO(response.data.rates.EUR);
+		});
+
+		axios.get(cynp).then((response) => {
+			console.log("CNY: ", response.data.rates.CNY)
+			setCYN(response.data.rates.CNY);
+		});
+	}, []);
 
 	function simulateNetworkRequest() {
 		return new Promise((resolve) => setTimeout(resolve, 2000));
+	}
+
+	function getPrices() {
+
+		axios.get(usdp).then((response) => {
+			console.log("USD: ", response.data.rates.USD)
+			setUSD(response.data.rates.USD);
+		});
+
+		axios.get(europ).then((response) => {
+			console.log("EURO: ", response.data.rates.EUR);
+			setEURO(response.data.rates.EUR);
+		});
+
+		axios.get(cynp).then((response) => {
+			console.log("CNY: ", response.data.rates.CNY)
+			setCYN(response.data.rates.CNY);
+		});
 	}
 
 	useEffect(() => {
@@ -32,7 +76,15 @@ export default function InstructionsComponent() {
 		}
 	}, [isLoading]);
 
-	const handleClick = () => setLoading(true);
+	const handleClick = () => {
+		getPrices();
+		setLoading(true)
+	};
+
+	if (!usd) return null;
+	if (!euro) return null;
+	if (!cyn) return null;
+
 
 
 	return (
@@ -73,17 +125,17 @@ export default function InstructionsComponent() {
 							<Tbody>
 								<Tr>
 									<Td>RU-USD</Td>
-									<Td>0.012</Td>
+									<Td>{usd == 0 ? "0" : usd.toString()}</Td>
 									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 								<Tr>
 									<Td>RU-EURO</Td>
-									<Td>0.011</Td>
+									<Td>{euro == 0 ? "0" : euro.toString()}</Td>
 									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 								<Tr>
 									<Td>RU-CNY</Td>
-									<Td>0.085</Td>
+									<Td>{cyn == 0 ? "0" : cyn.toString()}</Td>
 									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 							</Tbody>
