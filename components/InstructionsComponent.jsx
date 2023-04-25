@@ -1,6 +1,6 @@
 import styles from "../styles/InstructionsComponent.module.css";
 import Router, { useRouter } from "next/router";
-import { Flex, Grid, GridItem, Box, Text } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Box, Text, border } from "@chakra-ui/react";
 import {
 	Table,
 	Thead,
@@ -34,35 +34,35 @@ export default function InstructionsComponent() {
 				templateColumns='repeat(5, 1fr)'
 				gap={4}
 			>
-				<GridItem rowSpan={2} colSpan={1}><Button colorScheme='teal' variant='outline'>
+				<GridItem rowSpan={2} colSpan={1}><Button colorScheme='white' variant='outline'>
 					Get Prices
 				</Button></GridItem>
-				<GridItem colSpan={4} >
+				<GridItem colSpan={4} border='1px' borderColor='gray.200' >
 					<TableContainer>
 						<Table variant='simple'>
 							{/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
 							<Thead>
 								<Tr>
-									<Th>Pair</Th>
-									<Th>Price</Th>
-									<Th isNumeric>Date</Th>
+									<Th color={"white"}>Pair</Th>
+									<Th color={"white"}>Price</Th>
+									<Th isNumeric color={"white"}>Date</Th>
 								</Tr>
 							</Thead>
 							<Tbody>
 								<Tr>
 									<Td>RU-USD</Td>
-									<Td>1.25</Td>
-									<Td isNumeric>04/10/2023</Td>
+									<Td>0.012</Td>
+									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 								<Tr>
 									<Td>RU-EURO</Td>
-									<Td>2.3762</Td>
-									<Td isNumeric>04/10/2023</Td>
+									<Td>0.011</Td>
+									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 								<Tr>
-									<Td>RU-YUAN</Td>
-									<Td>0.22053</Td>
-									<Td isNumeric>04/10/2023</Td>
+									<Td>RU-CNY</Td>
+									<Td>0.085</Td>
+									<Td isNumeric>04/25/2023</Td>
 								</Tr>
 							</Tbody>
 							{/* <Tfoot>
@@ -76,9 +76,7 @@ export default function InstructionsComponent() {
 					</TableContainer></GridItem>
 			</Grid>
 
-
-
-
+			<br />
 			<div className={styles.footer}>
 				<div className={styles.icons_container}>
 					<div>
