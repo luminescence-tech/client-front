@@ -6,6 +6,7 @@ import {
 	Thead,
 	Tbody,
 	Tfoot,
+	Spinner,
 	Tr,
 	Th,
 	Td,
@@ -13,9 +14,27 @@ import {
 	TableContainer,
 } from '@chakra-ui/react'
 import { Button, ButtonGroup } from '@chakra-ui/react'
+import React, { useEffect, useState } from 'react';
 
 export default function InstructionsComponent() {
 	const router = useRouter();
+	const [isLoading, setLoading] = useState(false);
+
+	function simulateNetworkRequest() {
+		return new Promise((resolve) => setTimeout(resolve, 2000));
+	}
+
+	useEffect(() => {
+		if (isLoading) {
+			simulateNetworkRequest().then(() => {
+				setLoading(false);
+			});
+		}
+	}, [isLoading]);
+
+	const handleClick = () => setLoading(true);
+
+
 	return (
 		<div className={styles.container}>
 			<header className={styles.header_container}>
@@ -34,10 +53,13 @@ export default function InstructionsComponent() {
 				templateColumns='repeat(5, 1fr)'
 				gap={4}
 			>
-				<GridItem rowSpan={2} colSpan={1}><Button colorScheme='white' variant='outline'>
-					Get Prices
-				</Button></GridItem>
-				<GridItem colSpan={4} border='1px' borderColor='gray.200' >
+				<GridItem rowSpan={2} colSpan={1}>
+					<Button colorScheme='white' variant='outline' onClick={!isLoading ? handleClick : null}>
+						Get Prices
+					</Button>
+				</GridItem>
+
+				{isLoading ? 'Loading…' : <GridItem colSpan={4} border='1px' borderColor='gray.200' >
 					<TableContainer>
 						<Table variant='simple'>
 							{/* <TableCaption>Imperial to metric conversion factors</TableCaption> */}
@@ -73,7 +95,11 @@ export default function InstructionsComponent() {
 								</Tr>
 							</Tfoot> */}
 						</Table>
-					</TableContainer></GridItem>
+					</TableContainer>
+				</GridItem>}
+
+
+
 			</Grid>
 
 			<br />
